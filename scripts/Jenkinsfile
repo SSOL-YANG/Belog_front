@@ -24,37 +24,37 @@ pipeline {
         // 1. GitHub에서 특정 브랜치의 코드 가져오기
         stage('checkout') {
             steps {
-                git branch: 'master',
-                url: 'https://github.com/fake-dp/Belog_front',
-                credentialsId: 'github-fakedp'
+                git branch: 'main',
+                url: 'https://github.com/SSOL-YANG/Belog_front.git',
+                credentialsId: 'github-user'
             }
         }
 
-        // 2. 리액트 코드 빌드 및 테스트 진행
-        stage('build') {
-            steps {
-                   dir('client') {
-                    // install necessary packages
-                    sh 'npm install --package-lock-only'
-                    sh 'npm run build'
-                }
-            }
-        }
+        // // 2. 리액트 코드 빌드 및 테스트 진행
+        // stage('build') {
+        //     steps {
+        //            dir('client') {
+        //             // install necessary packages
+        //             sh 'npm install --package-lock-only'
+        //             sh 'npm run build'
+        //         }
+        //     }
+        // }
 
         // 3. 도커 이미지 생성 및 Docker Hub에 푸시
         stage('Dockerize') {
             steps {
                 // 도커 이미지 빌드
-                sh 'docker build -t fake-dp/jenkins-depoly .'
+                sh 'docker build -t mason9/jenkins-depoly .'
 
                 // 도커 허브에 로그인
                 sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
 
                 // 도커 이미지 푸시
-                sh 'docker push fake-dp/jenkins-depoly'
+                sh 'docker push mason9/jenkins-depoly'
 
                 // 도커 이미지 삭제 (불필요한 파일 삭제)
-                sh 'docker rmi fake-dp/jenkins-depoly'
+                sh 'docker rmi mason9/jenkins-depoly'
             }
         }
         
