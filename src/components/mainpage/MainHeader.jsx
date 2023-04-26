@@ -15,6 +15,7 @@ const MainHeader = () => {
         <div>
           <p>최신</p>
           <p>카테고리</p>
+          <p>모각코</p>
         </div>
         <div>
           <p onClick={toggleInfo}>
