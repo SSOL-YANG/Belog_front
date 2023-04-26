@@ -58,6 +58,7 @@ pipeline {
                 sh 'docker rmi mason9/jenkins-deploy'
             }
         }
+        
         stage("Deploy to EC2") {
             steps {
                   sh "$SSH_CMD $REMOTE 'docker pull $repository'"
