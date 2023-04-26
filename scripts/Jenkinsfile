@@ -19,7 +19,7 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker-user')
         SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem'
         REMOTE = 'ubuntu@13.125.93.217'
-        DOCKER_CONTAINER_NAME = 'devlog'
+        DOCKER_CONTAINER_NAME = 'jenkins-deploy'
         repository = 'mason9/jenkins-deploy'
     }
 
@@ -61,8 +61,8 @@ pipeline {
         stage("Deploy to EC2") {
             steps {
                   sh "$SSH_CMD $REMOTE 'docker pull $repository'"
-                  sh "$SSH_CMD $REMOTE 'docker stop $DOCKER_CONTAINER_NAME  true'"
-                  sh "$SSH_CMD $REMOTE 'docker rm $DOCKER_CONTAINER_NAME  true'"
+                  sh "$SSH_CMD $REMOTE 'docker stop $DOCKER_CONTAINER_NAME || true'"
+                  sh "$SSH_CMD $REMOTE 'docker rm $DOCKER_CONTAINER_NAME  || true'"
                   sh "$SSH_CMD $REMOTE 'docker run -d --name $DOCKER_CONTAINER_NAME -p 80:3000 $repository'"
                   sh "$SSH_CMD $REMOTE 'docker images -qf dangling=true | xargs -I{} docker rmi {}'"
             }
