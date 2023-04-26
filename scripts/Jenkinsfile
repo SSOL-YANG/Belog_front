@@ -19,8 +19,8 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('docker-user')
         SSH_CMD = 'ssh -i /var/lib/jenkins/.ssh/jenkins.pem'
         REMOTE = 'ubuntu@13.125.93.217'
-        DOCKER_CONTAINER_NAME = 'winter-blog'
-        repository = 'mason9/winter-blog'
+        DOCKER_CONTAINER_NAME = 'devlog'
+        repository = 'mason9/jenkins-deploy'
     }
 
 
